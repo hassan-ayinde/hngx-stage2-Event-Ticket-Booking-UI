@@ -1,10 +1,13 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import ActionButton from './ActionButton'
 import EventDetails from './EventDetails'
 import AttendeeInfo from './AttendeeInfo'
 import TicketBookingStage from './TicketBookingStage'
+import { ImageContext } from "./ImageContext";
 
 const EventDetailsCard = ({stepRestart}) => {
+    const { imageUrl } = useContext(ImageContext);
+    console.log("Image URL from context:", imageUrl);
   return (
     <div className='w-[90%] m-auto w-[90%] max-w-md sm:max-w-2xl'>
         <div>
@@ -51,8 +54,8 @@ const EventDetailsCard = ({stepRestart}) => {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <img src="" alt="" srcset="" />
+                <div className='m-auto h-28 w-28'>
+                    <img src={imageUrl} alt="User Avatar" className='w-28 h-28 object-cover'/>
                 </div>
                 <div className='attendee-info'>
                     <AttendeeInfo/>
