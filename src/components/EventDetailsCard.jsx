@@ -4,18 +4,24 @@ import EventDetails from './EventDetails'
 import AttendeeInfo from './AttendeeInfo'
 import TicketBookingStage from './TicketBookingStage'
 import { ImageContext } from "./ImageContext";
+import BarCode from '../assets/barcode.png' 
 
-const EventDetailsCard = ({stepRestart}) => {
+const EventDetailsCard = ({attendeeData,stepRestart}) => {
     const { imageUrl } = useContext(ImageContext);
     console.log("Image URL from context:", imageUrl);
+    console.log(attendeeData)
   return (
-    <div className='w-[90%] m-auto w-[90%] max-w-md sm:max-w-2xl'>
+    <div className='w-[90%] p-3 m-auto max-w-md-8 sm:p-10 sm:max-w-2xl bg-mint-800 border border-mint-600 border-solid rounded-3xl'>
         <div>
             <TicketBookingStage stageTitle='Ready' stageNumber={3}/>
         </div>
-        <div className="relative w-72 m-auto">
-            <div className="card-details">
-                <svg width="300" height="600" viewBox="0 0 300 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className='text-white text-center mb-6'>
+            <h2 className='text-3xl'>Your Ticket is booked!</h2>
+            <p className='mt-1'>You can download or check your Email for a copy</p>
+        </div>
+        <div className="relative m-auto">
+            <div className="card-details flex justify-center items-center">
+                <svg width="300" className='m-auto' height="600" viewBox="0 0 300 600" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_2010_3950)">
                     <mask id="path-1-inside-1_2010_3950" fill="white">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M300 24.2433C300 21.7558 297.488 20 295 20C286.716 20 280 13.2843 280 5C280 2.51247 278.244 0 275.757 0H24.2433C21.7558 0 20 2.51246 20 5C20 13.2843 13.2843 20 5 20C2.51246 20 0 21.7558 0 24.2433V468.757C0 471.244 2.51247 473 5 473C13.2843 473 20 479.716 20 488C20 496.284 13.2843 503 5 503C2.51247 503 0 504.756 0 507.243V575.757C0 578.244 2.51245 580 5 580C13.2843 580 20 586.716 20 595C20 597.488 21.7558 600 24.2433 600H275.757C278.244 600 280 597.488 280 595C280 586.716 286.716 580 295 580C297.488 580 300 578.244 300 575.757V507.243C300 504.756 297.488 503 295 503C286.716 503 280 496.284 280 488C280 479.716 286.716 473 295 473C297.488 473 300 471.244 300 468.757V24.2433ZM280 487C280 487.552 279.552 488 279 488H273C272.448 488 272 487.552 272 487C272 486.448 272.448 486 273 486H279C279.552 486 280 486.448 280 487ZM267 488C267.552 488 268 487.552 268 487C268 486.448 267.552 486 267 486H261C260.448 486 260 486.448 260 487C260 487.552 260.448 488 261 488H267ZM256 487C256 487.552 255.552 488 255 488H249C248.448 488 248 487.552 248 487C248 486.448 248.448 486 249 486H255C255.552 486 256 486.448 256 487ZM243 488C243.552 488 244 487.552 244 487C244 486.448 243.552 486 243 486H237C236.448 486 236 486.448 236 487C236 487.552 236.448 488 237 488H243ZM232 487C232 487.552 231.552 488 231 488H225C224.448 488 224 487.552 224 487C224 486.448 224.448 486 225 486H231C231.552 486 232 486.448 232 487ZM219 488C219.552 488 220 487.552 220 487C220 486.448 219.552 486 219 486H213C212.448 486 212 486.448 212 487C212 487.552 212.448 488 213 488H219ZM208 487C208 487.552 207.552 488 207 488H201C200.448 488 200 487.552 200 487C200 486.448 200.448 486 201 486H207C207.552 486 208 486.448 208 487ZM195 488C195.552 488 196 487.552 196 487C196 486.448 195.552 486 195 486H189C188.448 486 188 486.448 188 487C188 487.552 188.448 488 189 488H195ZM184 487C184 487.552 183.552 488 183 488H177C176.448 488 176 487.552 176 487C176 486.448 176.448 486 177 486H183C183.552 486 184 486.448 184 487ZM171 488C171.552 488 172 487.552 172 487C172 486.448 171.552 486 171 486H165C164.448 486 164 486.448 164 487C164 487.552 164.448 488 165 488H171ZM160 487C160 487.552 159.552 488 159 488H153C152.448 488 152 487.552 152 487C152 486.448 152.448 486 153 486H159C159.552 486 160 486.448 160 487ZM147 488C147.552 488 148 487.552 148 487C148 486.448 147.552 486 147 486H141C140.448 486 140 486.448 140 487C140 487.552 140.448 488 141 488H147ZM136 487C136 487.552 135.552 488 135 488H129C128.448 488 128 487.552 128 487C128 486.448 128.448 486 129 486H135C135.552 486 136 486.448 136 487ZM123 488C123.552 488 124 487.552 124 487C124 486.448 123.552 486 123 486H117C116.448 486 116 486.448 116 487C116 487.552 116.448 488 117 488H123ZM112 487C112 487.552 111.552 488 111 488H105C104.448 488 104 487.552 104 487C104 486.448 104.448 486 105 486H111C111.552 486 112 486.448 112 487ZM99 488C99.5523 488 100 487.552 100 487C100 486.448 99.5523 486 99 486H93C92.4477 486 92 486.448 92 487C92 487.552 92.4477 488 93 488H99ZM88 487C88 487.552 87.5523 488 87 488H81C80.4477 488 80 487.552 80 487C80 486.448 80.4477 486 81 486H87C87.5523 486 88 486.448 88 487ZM75 488C75.5523 488 76 487.552 76 487C76 486.448 75.5523 486 75 486H69C68.4477 486 68 486.448 68 487C68 487.552 68.4477 488 69 488H75ZM64 487C64 487.552 63.5523 488 63 488H57C56.4477 488 56 487.552 56 487C56 486.448 56.4477 486 57 486H63C63.5523 486 64 486.448 64 487ZM51 488C51.5523 488 52 487.552 52 487C52 486.448 51.5523 486 51 486H45C44.4477 486 44 486.448 44 487C44 487.552 44.4477 488 45 488H51ZM40 487C40 487.552 39.5523 488 39 488H33C32.4477 488 32 487.552 32 487C32 486.448 32.4477 486 33 486H39C39.5523 486 40 486.448 40 487ZM27 488C27.5523 488 28 487.552 28 487C28 486.448 27.5523 486 27 486H21C20.4477 486 20 486.448 20 487C20 487.552 20.4477 488 21 488H27Z"/>
@@ -40,37 +46,42 @@ const EventDetailsCard = ({stepRestart}) => {
                     </defs>
                 </svg>
             </div>
-            <div className="text-white border border-solid text-blue-500 attendee-inf absolute top-10 left-3">
-                <div>
-                    <h2>Your Ticket is booked</h2>
-                    <p>You can download or check your Email for a copy</p>
-                </div>
+            <div className="flex flex-col text-white border border-mint-400 border-solid attendee-inf absolute top-13 left-1/2 transform -translate-x-1/2 w-[90%] max-w-[270px]  rounded-2xl">
                 <div className='event-info'>
-                    <div className='text-white text-center'>
-                        <h1>Techember Fest ”25</h1>
+                    <div className='text-white text-center mt-2'>
+                        <h1 className='text-2xl'>Techember Fest ”25</h1>
                         <div className=''>
                             <p>📍 O4 Rumens road, ikoyi, lagos</p>
                             <p>📆March 15, 2025 | 7:00 PM</p>
                         </div>
                     </div>
                 </div>
-                <div className='m-auto h-28 w-28'>
-                    <img src={imageUrl} alt="User Avatar" className='w-28 h-28 object-cover'/>
+                <div className='m-auto h-[140px] w-[140px] my-1'>
+                    <img src={imageUrl} alt="User Avatar" className='h-[140px] w-[140px] object-cover border-4 border-solid border-mint-500 rounded-xl'/>
                 </div>
                 <div className='attendee-info'>
-                    <AttendeeInfo/>
+                    <AttendeeInfo 
+                        name={attendeeData.name} 
+                        email={attendeeData.email}
+                        ticketType={attendeeData.ticketType}  // Only if available
+                        ticketQuantity={attendeeData.ticketQuantity}
+                        specialRequest={attendeeData.about}
+                    />
                 </div>
             </div>
+            <div className='absolute -bottom-5 left-1/2 transform -translate-x-1/2 w-[236px]'>
+                <img src={BarCode} alt="QR Code" className='w-full'/>
+            </div>
         </div>
-        <div>
+        <div className='flex flex-col sm:flex-row sm:justify-between mt-10'>
             <ActionButton 
                 title='Book Another Ticket'
-                className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                className="py-2.5 px-5 me-2 mb-2 w-full text-sm font-medium  bg-transparent text-mint-500 focus:outline-none rounded-lg border border-solid border-mint-500"
                 onClick={stepRestart}
             />
             <ActionButton
              title='Download Ticket'
-             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+             className="text-white bg-bluefont-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 bg-mint-500 w-full"
             />
         </div>
     </div>

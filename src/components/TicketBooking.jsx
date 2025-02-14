@@ -3,7 +3,6 @@ import EventDetails from './EventDetails';
 import TicketType from './TicketType';
 import TicketQuantitySelector from './TicketQuantitySelector';
 import ActionButton from './ActionButton';
-import Stack from '@mui/material/Stack';
 import AttendeesDetailsForm from './AttendeesDetailsForm';
 import EventDetailsCard from './EventDetailsCard';
 import TicketBookingStage from './TicketBookingStage';
@@ -32,8 +31,6 @@ const TicketBooking = () => {
     setCurrentStep(2);
   };
 
-  // When the form in step 2 is submitted, merge its values
-  // with the selected ticket type and ticket quantity.
   const goToStep3 = (values) => {
     setAttendeeData({
       ...values,
@@ -43,7 +40,6 @@ const TicketBooking = () => {
     setCurrentStep(3);
   };
 
-   // Persist currentStep to local storage whenever it changes
 
   return (
     <div>

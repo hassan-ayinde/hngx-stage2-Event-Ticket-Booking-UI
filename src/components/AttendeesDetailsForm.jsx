@@ -8,6 +8,24 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ImageContext } from './ImageContext';
 
+// Helper function to retrieve saved form values from local storage
+const getSavedValues = () => {
+    try {
+      const saved = localStorage.getItem('attendeesData');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Error reading local storage:', e);
+    }
+    return {
+      profilePhoto: '',
+      name: '',
+      email: '',
+      about: '',
+    };
+  };
+
 const AttendeesDetailsForm = ({ onClick, stageOne }) => {
   const { imageUrl } = useContext(ImageContext);
 
@@ -21,16 +39,13 @@ const AttendeesDetailsForm = ({ onClick, stageOne }) => {
   });
 
   const formik = useFormik({
-    initialValues: {
-      profilePhoto: '',
-      name: '',
-      email: '',
-      about: '',
-    },
+    initialValues: getSavedValues(),
     validationSchema,
     onSubmit: (values) => {
-      onClick(values);
-      console.log(values);
+        localStorage.setItem('attendeesData', JSON.stringify(values));
+        onClick(values);
+        console.log(values);
+
     },
     validateOnChange: false,
     validateOnBlur: false,
@@ -43,31 +58,37 @@ const AttendeesDetailsForm = ({ onClick, stageOne }) => {
     }
   }, [imageUrl]);
 
+   // Persist form values to local storage whenever they change.
+   useEffect(() => {
+    localStorage.setItem('attendeesData', JSON.stringify(formik.values));
+  }, [formik.values]);
+
+
   return (
-    <div className="w-[90%] m-auto max-w-md sm:max-w-2xl">
+    <div className="w-[90%] m-auto max-w-md sm:max-w-2xl bg-mint-800 border border-solid border-mint-600 rounded-3xl py-8 px-4 sm:py-12 sm:px-12">
       <div>
         <TicketBookingStage stageTitle="Attendee Details" stageNumber={2} />
       </div>
-      <form onSubmit={formik.handleSubmit} className="text-white border border-amber-200 p-6" noValidate>
+      <form onSubmit={formik.handleSubmit} className="text-white border border-mint-600 rounded-3xl p-4 sm:p-6 bg-mint-800" noValidate>
         {/* Upload Section */}
-        <div className="border border-amber-200 border-solid p-4 mb-4">
+        <div className="border border-mint-250 border-solid p-4 sm:p-6 mb-4 bg-mint-150 rounded-3xl">
           <label htmlFor="profile-photo" className="block mb-2 text-sm font-medium">
             Upload Profile Photo
           </label>
           <div className="relative" tabIndex="0" onFocus={() => formik.setFieldError('profilePhoto', '')}>
-            <div className="w-full h-52 bg-green-300"></div>
+            <div className="w-full h-50 bg-mint-700"></div>
             <AvatarUpload />
           </div>
           {formik.submitCount > 0 && formik.errors.profilePhoto && (
-            <div id="profilePhoto-error" role="alert" className="text-red-500 text-sm">
+            <div id="profilePhoto-error" role="alert" className="text-red-500 text-sm mt-4">
               {formik.errors.profilePhoto}
             </div>
           )}
         </div>
 
         {/* Name Field */}
-        <div className="mb-4">
-          <label htmlFor="name" className="block mb-2 text-sm font-medium">
+        <div className="mb-4 border-t-4 border-solid border-mint-250">
+          <label htmlFor="name" className="block mb-2 text-sm font-medium pt-7">
             Enter your name *
           </label>
           <input
@@ -81,8 +102,9 @@ const AttendeesDetailsForm = ({ onClick, stageOne }) => {
             value={formik.values.name}
             aria-invalid={formik.submitCount > 0 && Boolean(formik.errors.name)}
             aria-describedby="name-error"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-                       focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            autoComplete='off'
+            className="bg-transparent border border-mint-250 text-white text-sm rounded-lg 
+                       focus:border-1 focus:border-mint-600 focus:outline-0 block w-full p-2.5"
           />
           {formik.submitCount > 0 && formik.errors.name && (
             <div id="name-error" role="alert" className="text-red-500 text-sm">
@@ -118,10 +140,11 @@ const AttendeesDetailsForm = ({ onClick, stageOne }) => {
               onChange={formik.handleChange}
               onFocus={() => formik.setFieldError('email', '')}
               value={formik.values.email}
+              autoComplete='off'
               aria-invalid={formik.submitCount > 0 && Boolean(formik.errors.email)}
               aria-describedby="email-error"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-                         focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+              className="bg-transparent border border-mint-250 text-white text-sm rounded-lg 
+                        focus:border-1 focus:border-mint-600 focus:outline-0 block w-full pl-10 p-2.5"
             />
           </div>
           {formik.submitCount > 0 && formik.errors.email && (
@@ -144,8 +167,10 @@ const AttendeesDetailsForm = ({ onClick, stageOne }) => {
             onChange={formik.handleChange}
             onFocus={() => formik.setFieldError('about', '')}
             value={formik.values.about}
-            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg 
-                       border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+            maxLength={20}
+            autoComplete='off'
+            className="block p-2.5 w-full text-smbg-transparent border border-mint-250 text-white rounded-lg 
+                        focus:border-1 focus:border-mint-600 focus:outline-0"
           ></textarea>
           {formik.submitCount > 0 && formik.errors.about && (
             <div id="about-error" role="alert" className="text-red-500 text-sm">
@@ -155,21 +180,19 @@ const AttendeesDetailsForm = ({ onClick, stageOne }) => {
         </div>
 
         {/* Buttons */}
-        <Stack direction="row">
+        <div className='flex flex-col sm:flex-row sm:justify-between mt-10'>
           <ActionButton
             title="Back"
-            className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 
-                       focus:outline-none bg-white rounded-lg border border-gray-200 
-                       hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+            className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-mint-500 
+                       focus:outline-none bg-transparent rounded-lg border border-mint-500 w-full"
             onClick={stageOne}
           />
           <ActionButton
             title="Get My Free Ticket"
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
-                       focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+            className="text-white bg-mint-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 w-full"
           />
-        </Stack>
+        </div>
       </form>
     </div>
   );
