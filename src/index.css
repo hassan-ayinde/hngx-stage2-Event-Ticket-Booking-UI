@@ -3,3 +3,20 @@
 body{
   background-color: #02191D;
 }
+
+@theme{
+  --color-mint-500: #24A0B5;
+  --color-mint-700: rgba(0, 0, 0, 0.2);
+  --color-mint-600: #0E464F;
+  --color-mint-100: rgba(36, 160, 181, 0.5);
+  --color-mint-150: #052228;
+  --color-mint-250: #07373F;
+  --color-mint-800: #041E23;
+  --color-mint-900: #08252B;
+  --color-mint-300: #12464E;
+  --color-mint-350: #197686;
+  --color-mint-850: #08343C;
+  --color-mint-950: #133D44;
+  --color-mint-400: #24A0B5;
+  --color-mint-50: #D9D9D9;
+}
